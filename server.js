@@ -2,6 +2,8 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+const port = process.env.PORT || 3000;
+
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -12,14 +14,14 @@ app.use((req, res, next) => {
     var log = `${now}: ${req.method} ${req.url}`;
 
     console.log(log);
-    
+
     fs.appendFile('server.log', log + '\n', (err) => {
         if (err) {
             console.log('Unable to append to server.log');
         }
     });
 
-    next();  
+    next();
 });
 
 /*app.use((req, res, next) => {
@@ -61,7 +63,7 @@ app.get('/bad', (req, res) => {
 })
 
 
-app.listen(3000, () => {
-    console.log('Server is up and running');
-    
+app.listen(port, () => {
+    console.log(`Server is up on port ${port}`);
+
 });
